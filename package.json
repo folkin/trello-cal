@@ -1,0 +1,24 @@
+{
+  "name": "trello-cal",
+  "version": "0.1.2",
+  "description": "A service to automatically create cards on a Trello list from Google Calendar events",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/folkin/trello-cal"
+  },
+  "keywords": [
+    "trello", 
+    "google calendar", 
+    "gtd"
+  ],
+  "license": "Public Domain"
+}
