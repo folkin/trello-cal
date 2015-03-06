@@ -6,7 +6,7 @@ function exchangeCodeForToken(code, opts, next) {
         'code': code,
         'client_id': opts.clientId,
         'client_secret': opts.clientSecret,
-        'redirect_url': opts.callbackUrl,
+        'redirect_uri': opts.callbackUrl,
         'grant_type': 'authorization_code'
     };
 
@@ -44,7 +44,7 @@ GoogleAuth.prototype.authenticate = function(req, res, next) {
     var opts = this._options;
 
     var params = {
-      'redirect_url': opts.callbackUrl,
+      'redirect_uri': opts.callbackUrl,
       'response_type': 'code',
       'client_id': opts.clientId,
       'scope': opts.scope.join(' '),
