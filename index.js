@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var googleStrategy = require('passport-oauth2').Strategy;
 var bodyParser = require('body-parser');
 
 process.env.PWD = process.cwd();
@@ -15,10 +15,12 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new GoogleStrategy({
+passport.use(new OAuth2Strategy({
+    authorizationURL = 'https://accounts.google.com/o/oauth2/auth',
+    tokenURL = 'https://accounts.google.com/o/oauth2/token',
+    callbackURL: 'http://trello-cal.herokuapp.com/api/auth/google/callback',
     clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://trello-cal.herokuapp.com/api/auth/google/callback'
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('AccessToken: ' + accessToken);
@@ -41,8 +43,7 @@ router.get('/env', function(req, res) {
 
 router.get('/auth/google',
   passport.authenticate('google', { scope: [
-    'https://www.googleapis.com/auth/calendar.readonly',
-    'https://www.googleapis.com/auth/plus.login'
+    'https://www.googleapis.com/auth/calendar.readonly'
   ] }),
   function(req, res){ }
 );
