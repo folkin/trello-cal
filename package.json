@@ -7,6 +7,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+  "express": "^4.12.2",
+    "passport-google-oauth": "^0.2.0"
   },
   "engines": {
     "node": "0.10.x"
@@ -16,8 +18,8 @@
     "url": "https://github.com/folkin/trello-cal"
   },
   "keywords": [
-    "trello", 
-    "google calendar", 
+    "trello",
+    "google calendar",
     "gtd"
   ],
   "license": "Public Domain"
