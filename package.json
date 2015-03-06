@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "express": "~4.0.0",
-    "unirest": "~0.4.0"
+    "unirest": "~0.4.0",
+    "jwt-simple": "~0.2.0"
   },
   "engines": {
     "node": "0.10.x"
