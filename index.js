@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-//var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 
 process.env.PWD = process.cwd();
 var port = (process.env.PORT || 5000);
@@ -31,8 +31,8 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-//app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 var router = express.Router();
 
 router.get('/env', function(req, res) {
@@ -44,7 +44,7 @@ router.get('/auth/google',
   function(req, res){ }
 );
 
-router.get('auth/google/callback',
+router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/');

@@ -2,10 +2,10 @@
   "name": "trello-cal",
   "version": "0.1.2",
   "description": "A service to automatically create cards on a Trello list from Google Calendar events",
-  "main": "server.js",
+  "main": "index.js",
   "icon": "public/icon.png",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "~4.0.0",

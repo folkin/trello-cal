@@ -2,6 +2,6 @@
   "name": "Trello-Cal",
   "description": "A service to automatically create cards on a Trello list from Google Calendar events",
   "repository": "https://github.com/folkin/trello-cal",
-  "logo": "https://raw.githubusercontent.com/folkin/trello-cal/master/logo.png",
+  "logo": "public/logo.png",
   "keywords": ["trello", "google calendar", "gtd"]
 }
