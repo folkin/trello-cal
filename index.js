@@ -15,9 +15,9 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new OAuth2Strategy({
-    authorizationURL = 'https://accounts.google.com/o/oauth2/auth',
-    tokenURL = 'https://accounts.google.com/o/oauth2/token',
+passport.use(new googleStrategy({
+    authorizationURL: 'https://accounts.google.com/o/oauth2/auth',
+    tokenURL: 'https://accounts.google.com/o/oauth2/token',
     callbackURL: 'http://trello-cal.herokuapp.com/api/auth/google/callback',
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
