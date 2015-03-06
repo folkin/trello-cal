@@ -40,7 +40,10 @@ router.get('/env', function(req, res) {
 });
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar.readonly'] }),
+  passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/calendar.readonly',
+    'https://www.googleapis.com/auth/plus.login'
+  ] }),
   function(req, res){ }
 );
 
