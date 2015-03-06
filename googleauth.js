@@ -52,6 +52,7 @@ GoogleAuth.prototype.authenticate = function(req, res, next) {
       'include_granted_scopes': true
     };
     var authUrl = opts.authorizationUrl + '?' + qs.stringify(params);
+    authUrl = authUrl.replace('%20', '+');
     res.redirect(authUrl);
     console.log('  - redirecting to: ' + authUrl);
 };
