@@ -3,6 +3,8 @@ var app = express();
 var passport = require('passport');
 var googleStrategy = require('passport-oauth2').Strategy;
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
 
 process.env.PWD = process.cwd();
 var port = (process.env.PORT || 5000);
@@ -33,8 +35,13 @@ passport.use(new googleStrategy({
   }
 ));
 
+app.use(cookieParser);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 var router = express.Router();
 
 router.get('/env', function(req, res) {
@@ -56,5 +63,6 @@ router.get('/auth/google/callback',
 
 app.use('/api', router);
 app.use(express.static(process.env.PWD + '/public'));
+
 app.listen(port);
 console.log("Server running at localhost:" + port);
