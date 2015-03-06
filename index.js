@@ -6,7 +6,7 @@ process.env.PWD = process.cwd();
 var port = (process.env.PORT || 5000);
 
 var googleAuth = new GoogleAuth({
-    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     scope: [
       'https://www.googleapis.com/auth/userinfo.email',
