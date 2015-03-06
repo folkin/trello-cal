@@ -42,14 +42,14 @@ router.get('/env', function(req, res) {
 });
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: [
+  passport.authenticate('oauth2', { scope: [
     'https://www.googleapis.com/auth/calendar.readonly'
   ] }),
   function(req, res){ }
 );
 
 router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('oauth2', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/');
   });
