@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var GoogleAuth = require('./googleauth');
+var Database = require('./database');
 var jwt = require('jwt-simple');
 
 process.env.PWD = process.cwd();
@@ -14,6 +15,10 @@ var googleAuth = new GoogleAuth({
       'https://www.googleapis.com/auth/calendar.readonly'
     ]
 });
+
+var db = new Database({
+    'connString': process.env.DATABASE_URL
+})
 
 var router = express.Router();
 
