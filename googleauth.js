@@ -31,6 +31,7 @@ function GoogleAuth(opts) {
     this._options = {
         authorizationUrl: opts.authorizationUrl || 'https://accounts.google.com/o/oauth2/auth',
         tokenUrl: opts.tokenUrl || 'https://accounts.google.com/o/oauth2/token',
+        refreshUrl: opts.refreshUrl || 'https://www.googleapis.com/oauth2/v3/token',
         callbackUrl: opts.callbackUrl || 'http://trello-cal.herokuapp.com/api/auth/google/callback',
         clientId: opts.clientId,
         clientSecret: opts.clientSecret,
@@ -73,3 +74,28 @@ GoogleAuth.prototype.extractToken = function(req, res, next) {
         console.log('  - recieved unknown auth code: ' + req);
     }
 };
+
+GoogleAuth.prototype.getAccessToken = function(refreshToken, callback) {
+    var opts = this._options;
+
+    var params = {
+        'refresh_token': refreshToken,
+        'client_id': opts.clientId,
+        'client_secret': opts.clientSecret,
+        'grant_type': 'refresh_token'
+    };
+
+    unirest.post(opts.refreshUrl)
+        .header('Accept', 'application/json')
+        .type('application/x-www-form-urlencoded')
+        .send(qs.stringify(params))
+        .as.json(function(res) {
+            console.log('  - recieved auth token (' + res.status + '): ' + JSON.stringify(res.body));
+            if (res.statusType == 2) {
+                callback(null, res.body);
+            }
+            else {
+                callback(res.body);
+            }
+        });
+}

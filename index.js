@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var GoogleAuth = require('./googleauth');
+var GoogleCal = require('./googlecal');
 var Database = require('./database');
 var jwt = require('jwt-simple');
 
@@ -15,6 +16,8 @@ var googleAuth = new GoogleAuth({
       'https://www.googleapis.com/auth/calendar.readonly'
     ]
 });
+
+var googleCal = new GoogleCal({});
 
 var db = new Database({
     'connString': process.env.DATABASE_URL
@@ -33,6 +36,20 @@ router.get('/token/decode', function(req, res, next) {
     console.log('> decode token: ' + req.query.token + '  secret: ' + process.env.GOOGLE_CLIENT_SECRET);
     var token = jwt.decode(req.query.token, process.env.GOOGLE_CLIENT_SECRET, true);
     res.send(token);
+});
+
+router.get('/calendar', function(req, res, next) {
+    db.getAccounts(function(err, accts) {
+        if (err) { next(err); return; }
+        var refreshToken = accts[0].google.refresh_token;
+        googleAuth.getAccessToken(refreshToken, function(err, token) {
+            if (err) { next(err); return; }
+            googleCal.getCalendars(token.access_token, function(err, cals) {
+                if (err) { next(err); return; }
+                res.send(JSON.stringify(cals));
+            })
+        })
+    })
 });
 
 app.use('/api', router);
