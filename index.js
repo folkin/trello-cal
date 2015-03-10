@@ -8,6 +8,19 @@ var jwt = require('jwt-simple');
 process.env.PWD = process.cwd();
 var port = (process.env.PORT || 5000);
 
+if (!process.env.DATABASE_URL) {
+    var fs = require('fs');
+    var vars = fs.readFileSync(process.env.PWD + '/local.env').toString();
+    var pairs = vars.split('\n');
+    var parts;
+    var pair;
+    for (var i = 0, len = pairs.length; i < len; ++i) {
+        pair = pairs[i];
+        parts = pair.split('=');
+        process.env[parts[0]] = parts[1];
+    }
+}
+
 var googleAuth = new GoogleAuth({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -16,8 +29,6 @@ var googleAuth = new GoogleAuth({
       'https://www.googleapis.com/auth/calendar.readonly'
     ]
 });
-
-var googleCal = new GoogleCal({});
 
 var db = new Database({
     'connString': process.env.DATABASE_URL

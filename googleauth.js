@@ -91,7 +91,7 @@ GoogleAuth.prototype.getAccessToken = function(refreshToken, callback) {
         .send(qs.stringify(params))
         .as.json(function(res) {
             console.log('  - recieved auth token (' + res.status + '): ' + JSON.stringify(res.body));
-            if (res.statusType == 2) {
+            if (res.ok) {
                 callback(null, res.body);
             }
             else {
